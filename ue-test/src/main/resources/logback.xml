@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration debug="false" scan="false" scanPeriod="30 seconds">
+
+	<property resource="app.properties" />
+
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+	<property name="logging_level_info" value="info" />
+	<property name="logging_level_warn" value="warn" />
+	<property name="logging_level_default" value="${logger.level}" />
+	<property name="logging_level_test" value="${logger.debug.level}" />
+
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+	<property name="logging_default_pattern"
+		value="%d [%t] [%X{session_uid}@%X{req.remoteHost} %X{req.requestURI} %X{req.queryString}] %-5p %c [%F:%L-%M] - %m%n" />
+	<property name="loggint_digest_pattern" value="%d - %m%n" />
+
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+
+	<property name="log_file_path" value="${log.home}/ut" />
+
+	<property name="file_post_fix" value=".%d{yyyy-MM-dd}.b" />
+	<property name="file_default" value="${log_file_path}/common-default.log" />
+	<property name="file_error" value="${log_file_path}/common-error.log" />
+
+	<property name="file_web_default" value="${log_file_path}/ehealth-web.log" />
+	<property name="file_core_model" value="${log_file_path}/ehealth-core-model.log" />
+	<property name="file_core_service" value="${log_file_path}/ehealth-core-service.log" />
+
+	<property name="file_biz_service" value="${log_file_path}/ehealth-biz-service.log" />
+	<property name="file_common_dal" value="${log_file_path}/ehealth-common-dal.log" />
+	<property name="file_common_integration"
+		value="${log_file_path}/ehealth-common-integration.log" />
+
+
+	<property name="file_biz_digest"
+		value="${log_file_path}/ehealth-biz-service-digest.log" />
+	<property name="file_dal_digest" value="${log_file_path}/ehealth-dal-digest.log" />
+	<property name="file_sal_digest" value="${log_file_path}/ehealth-sal-digest.log" />
+	<property name="file_page_digest" value="${log_file_path}/ehealth-page-digest.log" />
+
+
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+	<!-- STDOUT -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<withJansi>false</withJansi>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- DEFAULT -->
+	<appender name="DEFAULT"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_default}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_default}${file_post_fix}</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- common-error -->
+	<appender name="COMMON-ERROR"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+		<file>${file_error}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_error}${file_post_fix}</fileNamePattern>
+			<!-- <maxHistory>30</maxHistory> -->
+		</rollingPolicy>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+	<appender name="EHEALTH-WEB-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_web_default}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_web_default}${file_post_fix}
+			</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="EHEALTH-CORE-MODEL-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_core_model}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_core_model}${file_post_fix}</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="EHEALTH-CORE-SERVICE-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_core_service}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_core_service}${file_post_fix}
+			</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="EHEALTH-BIZ-SERVICE-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_biz_service}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_biz_service}${file_post_fix}
+			</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="EHEALTH-DAL-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_common_dal}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_common_dal}${file_post_fix}</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="EHEALTH-INTEGRATION-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_common_integration}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_common_integration}${file_post_fix}
+			</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+
+
+
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+
+	<!-- EHEALTH-BIZ-SERVICE-DIGEST-APPENDER -->
+	<appender name="EHEALTH-BIZ-SERVICE-DIGEST-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_biz_digest}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_biz_digest}${file_post_fix}</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${loggint_digest_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- EHEALTH-DAL-DIGEST-APPENDER -->
+	<appender name="EHEALTH-DAL-DIGEST-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_dal_digest}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_dal_digest}${file_post_fix}</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${loggint_digest_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- EHEALTH-SAL-DIGEST-APPENDER -->
+	<appender name="EHEALTH-SAL-DIGEST-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_sal_digest}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_sal_digest}${file_post_fix}</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${loggint_digest_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- EHEALTH-PAGE-PERF-APPENDER -->
+	<appender name="EHEALTH-PAGE-PERF-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_page_digest}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_page_digest}${file_post_fix}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${loggint_digest_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+	<!-- dao性能摘要日志 -->
+	<logger name="EHEALTH-BIZ-SERVICE-DIGEST" level="${logging_level_info}"
+		additivity="false">
+		<appender-ref ref="EHEALTH-BIZ-SERVICE-DIGEST-APPENDER" />
+		<appender-ref ref="COMMON-ERROR" />
+	</logger>
+
+	<!-- dao性能摘要日志 -->
+	<logger name="EHEALTH-DAL-DIGEST" level="${logging_level_info}"
+		additivity="false">
+		<appender-ref ref="EHEALTH-DAL-DIGEST-APPENDER" />
+		<appender-ref ref="COMMON-ERROR" />
+	</logger>
+
+	<!-- dao性能摘要日志 -->
+	<logger name="EHEALTH-SAL-DIGEST" level="${logging_level_info}"
+		additivity="false">
+		<appender-ref ref="EHEALTH-SAL-DIGEST-APPENDER" />
+		<appender-ref ref="COMMON-ERROR" />
+	</logger>
+
+	<!-- dao性能摘要日志 -->
+	<logger name="EHEALTH-PAGE-PERF" level="${logging_level_info}"
+		additivity="false">
+		<appender-ref ref="EHEALTH-PAGE-PERF-APPENDER" />
+		<appender-ref ref="COMMON-ERROR" />
+	</logger>
+
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+	<logger name="ls.demon.webapp.web" level="${logging_level_default}"
+		additivity="false">
+		<appender-ref ref="EHEALTH-WEB-APPENDER" />
+		<appender-ref ref="COMMON-ERROR" />
+		<if condition='property("run.mode").contains("0")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
+	</logger>
+
+	<logger name="ls.demon.webapp.core.model" level="${logging_level_default}"
+		additivity="false">
+		<appender-ref ref="EHEALTH-CORE-MODEL-APPENDER" />
+		<appender-ref ref="COMMON-ERROR" />
+		<if condition='property("run.mode").contains("0")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
+	</logger>
+
+	<logger name="ls.demon.webapp.core.service" level="${logging_level_default}"
+		additivity="false">
+		<appender-ref ref="EHEALTH-CORE-SERVICE-APPENDER" />
+		<appender-ref ref="COMMON-ERROR" />
+		<if condition='property("run.mode").contains("0")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
+	</logger>
+
+	<logger name="ls.demon.webapp.biz" level="${logging_level_default}"
+		additivity="false">
+		<appender-ref ref="EHEALTH-BIZ-SERVICE-APPENDER" />
+		<appender-ref ref="COMMON-ERROR" />
+		<if condition='property("run.mode").contains("0")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
+	</logger>
+
+	<logger name="ls.demon.webapp.common.dal" level="${logging_level_default}"
+		additivity="false">
+		<appender-ref ref="EHEALTH-DAL-APPENDER" />
+		<appender-ref ref="COMMON-ERROR" />
+		<if condition='property("run.mode").contains("0")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
+	</logger>
+
+	<logger name="ls.demon.webapp.common.service.integration" level="${logging_level_default}"
+		additivity="false">
+		<appender-ref ref="EHEALTH-INTEGRATION-APPENDER" />
+		<appender-ref ref="COMMON-ERROR" />
+		<if condition='property("run.mode").contains("0")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
+	</logger>
+
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+
+	<logger name="com.baidu" level="${logging_level_default}" />
+	<logger name="com.qq" level="${logging_level_test}" />
+	<logger name="org.apache.cxf" level="${logging_level_test}" />
+	<logger name="ls.demon.webapp.util.ServerUtils" level="warn" />
+	<logger name="ls.demon.webapp.common.dal" level="${logger.sql.level}" />
+	<logger name="org.springframework.ui.velocity" level="${logging_level_test}" />
+	<logger name="org.springframework.web.servlet.view.velocity"
+		level="${logging_level_test}" />
+
+	<!-- 睿博默认日志输出 -->
+	<logger name="ls.demon" level="${logging_level_default}"
+		additivity="false">
+		<appender-ref ref="DEFAULT" />
+		<appender-ref ref="COMMON-ERROR" />
+		<if condition='property("run.mode").contains("0")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
+	</logger>
+
+
+	<!-- spring framework 默认日志输出 -->
+	<logger name="org.springframework" level="${logging_level_test}">
+	</logger>
+
+	<!-- spring web 默认日志输出 -->
+	<logger name="org.springframework.web" level="${logging_level_test}">
+	</logger>
+
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+	<!-- default -->
+	<root level="${logging_level_warn}">
+		<if condition='property("run.mode").contains("0")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
+		<appender-ref ref="DEFAULT" />
+		<appender-ref ref="COMMON-ERROR" />
+	</root>
+
+</configuration>
