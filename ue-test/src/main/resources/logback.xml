@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE configuration>
 <configuration debug="false" scan="false" scanPeriod="30 seconds">
 
@@ -11,6 +11,9 @@
 	<property name="logging_level_warn" value="warn" />
 	<property name="logging_level_default" value="${logger.level}" />
 	<property name="logging_level_test" value="${logger.debug.level}" />
+
+	<property name="cs_encoding" value="gbk" />
+
 
 	<!-- ================================================== -->
 	<!-- ================================================== -->
@@ -51,18 +54,18 @@
 
 	<!-- STDOUT -->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<!-- <Encoding>UTF-8</Encoding> -->
+		<!-- <Encoding>${cs_encoding}</Encoding> -->
 		<withJansi>false</withJansi>
 		<encoder>
 			<pattern>${logging_default_pattern}</pattern>
-			<charset>UTF-8</charset>
+			<charset>${cs_encoding}</charset>
 		</encoder>
 	</appender>
 
 	<!-- DEFAULT -->
 	<appender name="DEFAULT"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- <Encoding>UTF-8</Encoding> -->
+		<!-- <Encoding>${cs_encoding}</Encoding> -->
 		<file>${file_default}</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${file_default}${file_post_fix}</fileNamePattern>
@@ -70,7 +73,7 @@
 		</rollingPolicy>
 		<encoder>
 			<pattern>${logging_default_pattern}</pattern>
-			<charset>UTF-8</charset>
+			<charset>${cs_encoding}</charset>
 		</encoder>
 	</appender>
 
@@ -87,7 +90,7 @@
 		</rollingPolicy>
 		<encoder>
 			<pattern>${logging_default_pattern}</pattern>
-			<charset>UTF-8</charset>
+			<charset>${cs_encoding}</charset>
 		</encoder>
 	</appender>
 
@@ -96,7 +99,7 @@
 
 	<appender name="EHEALTH-WEB-APPENDER"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- <Encoding>UTF-8</Encoding> -->
+		<!-- <Encoding>${cs_encoding}</Encoding> -->
 		<file>${file_web_default}</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${file_web_default}${file_post_fix}
@@ -105,13 +108,13 @@
 		</rollingPolicy>
 		<encoder>
 			<pattern>${logging_default_pattern}</pattern>
-			<charset>UTF-8</charset>
+			<charset>${cs_encoding}</charset>
 		</encoder>
 	</appender>
 
 	<appender name="EHEALTH-CORE-MODEL-APPENDER"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- <Encoding>UTF-8</Encoding> -->
+		<!-- <Encoding>${cs_encoding}</Encoding> -->
 		<file>${file_core_model}</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${file_core_model}${file_post_fix}</fileNamePattern>
@@ -119,13 +122,13 @@
 		</rollingPolicy>
 		<encoder>
 			<pattern>${logging_default_pattern}</pattern>
-			<charset>UTF-8</charset>
+			<charset>${cs_encoding}</charset>
 		</encoder>
 	</appender>
 
 	<appender name="EHEALTH-CORE-SERVICE-APPENDER"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- <Encoding>UTF-8</Encoding> -->
+		<!-- <Encoding>${cs_encoding}</Encoding> -->
 		<file>${file_core_service}</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${file_core_service}${file_post_fix}
@@ -134,13 +137,13 @@
 		</rollingPolicy>
 		<encoder>
 			<pattern>${logging_default_pattern}</pattern>
-			<charset>UTF-8</charset>
+			<charset>${cs_encoding}</charset>
 		</encoder>
 	</appender>
 
 	<appender name="EHEALTH-BIZ-SERVICE-APPENDER"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- <Encoding>UTF-8</Encoding> -->
+		<!-- <Encoding>${cs_encoding}</Encoding> -->
 		<file>${file_biz_service}</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${file_biz_service}${file_post_fix}
@@ -149,13 +152,13 @@
 		</rollingPolicy>
 		<encoder>
 			<pattern>${logging_default_pattern}</pattern>
-			<charset>UTF-8</charset>
+			<charset>${cs_encoding}</charset>
 		</encoder>
 	</appender>
 
 	<appender name="EHEALTH-DAL-APPENDER"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- <Encoding>UTF-8</Encoding> -->
+		<!-- <Encoding>${cs_encoding}</Encoding> -->
 		<file>${file_common_dal}</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${file_common_dal}${file_post_fix}</fileNamePattern>
@@ -163,13 +166,13 @@
 		</rollingPolicy>
 		<encoder>
 			<pattern>${logging_default_pattern}</pattern>
-			<charset>UTF-8</charset>
+			<charset>${cs_encoding}</charset>
 		</encoder>
 	</appender>
 
 	<appender name="EHEALTH-INTEGRATION-APPENDER"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- <Encoding>UTF-8</Encoding> -->
+		<!-- <Encoding>${cs_encoding}</Encoding> -->
 		<file>${file_common_integration}</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${file_common_integration}${file_post_fix}
@@ -178,7 +181,7 @@
 		</rollingPolicy>
 		<encoder>
 			<pattern>${logging_default_pattern}</pattern>
-			<charset>UTF-8</charset>
+			<charset>${cs_encoding}</charset>
 		</encoder>
 	</appender>
 
@@ -192,49 +195,49 @@
 	<!-- EHEALTH-BIZ-SERVICE-DIGEST-APPENDER -->
 	<appender name="EHEALTH-BIZ-SERVICE-DIGEST-APPENDER"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- <Encoding>UTF-8</Encoding> -->
+		<!-- <Encoding>${cs_encoding}</Encoding> -->
 		<file>${file_biz_digest}</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${file_biz_digest}${file_post_fix}</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
 			<pattern>${loggint_digest_pattern}</pattern>
-			<charset>UTF-8</charset>
+			<charset>${cs_encoding}</charset>
 		</encoder>
 	</appender>
 
 	<!-- EHEALTH-DAL-DIGEST-APPENDER -->
 	<appender name="EHEALTH-DAL-DIGEST-APPENDER"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- <Encoding>UTF-8</Encoding> -->
+		<!-- <Encoding>${cs_encoding}</Encoding> -->
 		<file>${file_dal_digest}</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${file_dal_digest}${file_post_fix}</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
 			<pattern>${loggint_digest_pattern}</pattern>
-			<charset>UTF-8</charset>
+			<charset>${cs_encoding}</charset>
 		</encoder>
 	</appender>
 
 	<!-- EHEALTH-SAL-DIGEST-APPENDER -->
 	<appender name="EHEALTH-SAL-DIGEST-APPENDER"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- <Encoding>UTF-8</Encoding> -->
+		<!-- <Encoding>${cs_encoding}</Encoding> -->
 		<file>${file_sal_digest}</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${file_sal_digest}${file_post_fix}</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
 			<pattern>${loggint_digest_pattern}</pattern>
-			<charset>UTF-8</charset>
+			<charset>${cs_encoding}</charset>
 		</encoder>
 	</appender>
 
 	<!-- EHEALTH-PAGE-PERF-APPENDER -->
 	<appender name="EHEALTH-PAGE-PERF-APPENDER"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- <Encoding>UTF-8</Encoding> -->
+		<!-- <Encoding>${cs_encoding}</Encoding> -->
 		<file>${file_page_digest}</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${file_page_digest}${file_post_fix}
@@ -242,7 +245,7 @@
 		</rollingPolicy>
 		<encoder>
 			<pattern>${loggint_digest_pattern}</pattern>
-			<charset>UTF-8</charset>
+			<charset>${cs_encoding}</charset>
 		</encoder>
 	</appender>
 
