@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import ls.demon.xx.BaseModel;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,7 @@ public class ActionEnter extends BaseModel {
 
     private String              rootPath         = null;
     private String              contextPath      = null;
+    private String              reqPath          = null;
 
     private String              actionType       = null;
 
@@ -38,12 +40,21 @@ public class ActionEnter extends BaseModel {
     public ActionEnter(HttpServletRequest request, String rootPath) {
         logger.info("rootPath = {}", rootPath);
 
+        String reqUrl = request.getRequestURL().toString();
+        String reqUri = request.getRequestURI();
+        String reqX = request.getRequestURL().substring(0, StringUtils.indexOf(reqUrl, reqUri));
+        logger.info("{}, {}, {}", reqUrl, reqUri, reqX);
+
+        logger.info("{}", request.getServerName());
+
         this.request = request;
         this.rootPath = rootPath;
         this.actionType = request.getParameter("action");
         this.contextPath = request.getContextPath();
+        this.reqPath = reqX;
+
         this.configManager = ConfigManager.getInstance(this.rootPath, this.contextPath, request
-            .getRequestURI().replace(request.getContextPath(), ""));
+            .getRequestURI().replace(request.getContextPath(), ""), this.reqPath);
 
         logger.info("{}", this);
     }

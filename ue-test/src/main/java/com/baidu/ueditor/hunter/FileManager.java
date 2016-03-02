@@ -99,7 +99,8 @@ public class FileManager extends BaseModel {
 
     private String getPath(File file) {
         String path = PathFormat.format(file.getAbsolutePath());
-        return path.replace(this.rootPath, "/");
+        //        return path.replace(this.rootPath, "/");
+        return path.replace(this.rootPath, "");
     }
 
     private String[] getAllowFiles(Object fileExt) {

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import ls.demon.xx.BaseModel;
 
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -39,6 +40,7 @@ public final class ConfigManager extends BaseModel {
     private final String         rootPath;
     private final String         originalPath;
     private final String         contextPath;
+    private String               reqPath;
 
     private static final String  configFileName        = "config.json";
     private String               parentPath            = null;
@@ -53,17 +55,16 @@ public final class ConfigManager extends BaseModel {
     /*
      * 通过一个给定的路径构建一个配置管理器， 该管理器要求地址路径所在目录下必须存在config.properties文件
      */
-    private ConfigManager(String rootPath, String contextPath, String uri)
-                                                                          throws FileNotFoundException,
-                                                                          IOException {
+    private ConfigManager(String rootPath, String contextPath, String uri, String reqPath)
+                                                                                          throws FileNotFoundException,
+                                                                                          IOException {
 
         rootPath = rootPath.replace("\\", "/");
 
         this.contextPath = contextPath;
-
         this.rootPath = rootPath;
-
         this.originalPath = this.rootPath + uri;
+        this.reqPath = reqPath;
 
         this.initEnv();
 
@@ -75,14 +76,17 @@ public final class ConfigManager extends BaseModel {
      * @param rootPath 服务器根路径
      * @param contextPath 服务器所在项目路径
      * @param uri 当前访问的uri
+     * @param reqPath TODO
      * @return 配置管理器实例或者null
      */
-    public static ConfigManager getInstance(String rootPath, String contextPath, String uri) {
-        logger.info("rootPath={}, contextPath={}, uri={}", rootPath, contextPath, uri);
+    public static ConfigManager getInstance(String rootPath, String contextPath, String uri,
+                                            String reqPath) {
+        logger.info("rootPath={}, contextPath={}, uri={}, reqPath={}", rootPath, contextPath, uri,
+            reqPath);
 
         if (ConfigManagerInstance == null) {
             try {
-                ConfigManagerInstance = new ConfigManager(rootPath, contextPath, uri);
+                ConfigManagerInstance = new ConfigManager(rootPath, contextPath, uri, reqPath);
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
                 return null;
@@ -201,6 +205,31 @@ public final class ConfigManager extends BaseModel {
 
         try {
             JSONObject jsonConfig = new JSONObject(configContent);
+
+            {
+                String imageUrlPrefix = jsonConfig.optString("imageUrlPrefix");
+                if (!StringUtils.startsWithIgnoreCase(imageUrlPrefix, "http://")
+                    && !StringUtils.startsWithIgnoreCase(imageUrlPrefix, "https://")) {
+                    if (StringUtils.startsWith(imageUrlPrefix, "/")) {
+                        jsonConfig.put("imageUrlPrefix", this.reqPath + imageUrlPrefix);
+                    } else {
+                        jsonConfig.put("imageUrlPrefix", this.reqPath + "/" + imageUrlPrefix);
+                    }
+                }
+
+                String imageManagerUrlPrefix = jsonConfig.optString("imageManagerUrlPrefix");
+                if (!StringUtils.startsWithIgnoreCase(imageManagerUrlPrefix, "http://")
+                    && !StringUtils.startsWithIgnoreCase(imageManagerUrlPrefix, "https://")) {
+                    if (StringUtils.startsWith(imageManagerUrlPrefix, "/")) {
+                        jsonConfig.put("imageManagerUrlPrefix", this.reqPath
+                                                                + imageManagerUrlPrefix);
+                    } else {
+                        jsonConfig.put("imageManagerUrlPrefix", this.reqPath + "/"
+                                                                + imageManagerUrlPrefix);
+                    }
+                }
+            }
+
             this.jsonConfig = jsonConfig;
         } catch (Exception e) {
             this.jsonConfig = null;
