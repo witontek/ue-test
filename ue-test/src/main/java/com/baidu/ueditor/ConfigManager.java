@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -207,28 +208,41 @@ public final class ConfigManager extends BaseModel {
             JSONObject jsonConfig = new JSONObject(configContent);
 
             {
-                String imageUrlPrefix = jsonConfig.optString("imageUrlPrefix");
-                if (!StringUtils.startsWithIgnoreCase(imageUrlPrefix, "http://")
-                    && !StringUtils.startsWithIgnoreCase(imageUrlPrefix, "https://")) {
-                    if (StringUtils.startsWith(imageUrlPrefix, "/")) {
-                        jsonConfig.put("imageUrlPrefix", this.reqPath + imageUrlPrefix);
-                    } else {
-                        jsonConfig.put("imageUrlPrefix", this.reqPath + "/" + imageUrlPrefix);
-                    }
-                }
+                Iterator<String> it = jsonConfig.keys();
+                while (it.hasNext()) {
+                    String key = it.next();
+                    if (StringUtils.endsWithIgnoreCase(key, "UrlPrefix")) {
+                        String xPrefix = jsonConfig.optString(key);
+                        jsonConfig.put(key,
+                            StringUtils.replace(xPrefix, "${baseUrl}", this.reqPath));
 
-                String imageManagerUrlPrefix = jsonConfig.optString("imageManagerUrlPrefix");
-                if (!StringUtils.startsWithIgnoreCase(imageManagerUrlPrefix, "http://")
-                    && !StringUtils.startsWithIgnoreCase(imageManagerUrlPrefix, "https://")) {
-                    if (StringUtils.startsWith(imageManagerUrlPrefix, "/")) {
-                        jsonConfig.put("imageManagerUrlPrefix", this.reqPath
-                                                                + imageManagerUrlPrefix);
-                    } else {
-                        jsonConfig.put("imageManagerUrlPrefix", this.reqPath + "/"
-                                                                + imageManagerUrlPrefix);
                     }
                 }
             }
+
+            //            {
+            //                String imageUrlPrefix = jsonConfig.optString("imageUrlPrefix");
+            //                if (!StringUtils.startsWithIgnoreCase(imageUrlPrefix, "http://")
+            //                    && !StringUtils.startsWithIgnoreCase(imageUrlPrefix, "https://")) {
+            //                    if (StringUtils.startsWith(imageUrlPrefix, "/")) {
+            //                        jsonConfig.put("imageUrlPrefix", this.reqPath + imageUrlPrefix);
+            //                    } else {
+            //                        jsonConfig.put("imageUrlPrefix", this.reqPath + "/" + imageUrlPrefix);
+            //                    }
+            //                }
+            //
+            //                String imageManagerUrlPrefix = jsonConfig.optString("imageManagerUrlPrefix");
+            //                if (!StringUtils.startsWithIgnoreCase(imageManagerUrlPrefix, "http://")
+            //                    && !StringUtils.startsWithIgnoreCase(imageManagerUrlPrefix, "https://")) {
+            //                    if (StringUtils.startsWith(imageManagerUrlPrefix, "/")) {
+            //                        jsonConfig.put("imageManagerUrlPrefix", this.reqPath
+            //                                                                + imageManagerUrlPrefix);
+            //                    } else {
+            //                        jsonConfig.put("imageManagerUrlPrefix", this.reqPath + "/"
+            //                                                                + imageManagerUrlPrefix);
+            //                    }
+            //                }
+            //            }
 
             this.jsonConfig = jsonConfig;
         } catch (Exception e) {
