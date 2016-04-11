@@ -368,7 +368,7 @@
 		additivity="false">
 		<appender-ref ref="DEFAULT" />
 		<appender-ref ref="COMMON-ERROR" />
-		<if condition='property("run.mode").contains("0")'>
+		<if condition='property("os.name").contains("Windows")'>
 			<then>
 				<appender-ref ref="STDOUT" />
 			</then>
@@ -389,7 +389,7 @@
 
 	<!-- default -->
 	<root level="${logging_level_warn}">
-		<if condition='property("run.mode").contains("0")'>
+		<if condition='property("os.name").contains("Windows")'>
 			<then>
 				<appender-ref ref="STDOUT" />
 			</then>
