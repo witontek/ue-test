@@ -11,8 +11,6 @@ import java.io.StringWriter;
 
 import javax.servlet.http.HttpServletRequest;
 
-import ls.demon.xx.web.controller.form.XXForm;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -21,6 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import ls.demon.xx.web.controller.form.XXForm;
 
 /**
  * 
@@ -43,21 +43,21 @@ public class AccessTotenToolController {
 
             String timestamp = String.valueOf(System.currentTimeMillis());
 
-            String checkToken = DigestUtils.md5Hex(String.format("%s%s%s", appId, appSecret,
-                timestamp));
+            String accessToken = DigestUtils
+                .md5Hex(String.format("%s%s%s", appId, appSecret, timestamp));
 
             modelMap.addAttribute("appId", appId);
             modelMap.addAttribute("appSecret", appSecret);
             modelMap.addAttribute("timestamp", timestamp);
-            modelMap.addAttribute("checkToken", checkToken);
+            modelMap.addAttribute("checkToken", accessToken);
         }
 
         return "tool/at";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String doPost(ModelMap modelMap, XXForm form, HttpServletRequest request)
-                                                                                    throws IOException {
+    public String doPost(ModelMap modelMap, XXForm form,
+                         HttpServletRequest request) throws IOException {
         logger.info("[doPost]form={}", form);
 
         logger.info("{}", request.getCharacterEncoding());
@@ -65,8 +65,8 @@ public class AccessTotenToolController {
         logger.info("{}", request.getHeaderNames());
 
         StringWriter sw = new StringWriter();
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),
-            request.getCharacterEncoding()));
+        BufferedReader br = new BufferedReader(
+            new InputStreamReader(request.getInputStream(), request.getCharacterEncoding()));
         for (;;) {
             String line = br.readLine();
             if (line == null) {
@@ -76,17 +76,18 @@ public class AccessTotenToolController {
         }
         logger.info("content={}", sw.toString());
 
-        if (StringUtils.isNotBlank(form.getAppId()) && StringUtils.isNotBlank(form.getAppSecret())) {
+        if (StringUtils.isNotBlank(form.getAppId())
+            && StringUtils.isNotBlank(form.getAppSecret())) {
 
             String timestamp = String.valueOf(System.currentTimeMillis());
 
-            String checkToken = DigestUtils.md5Hex(String.format("%s%s%s", form.getAppId(),
-                form.getAppSecret(), timestamp));
+            String accessToken = DigestUtils
+                .md5Hex(String.format("%s%s%s", form.getAppId(), form.getAppSecret(), timestamp));
 
             modelMap.addAttribute("appId", form.getAppId());
             modelMap.addAttribute("appSecret", form.getAppSecret());
             modelMap.addAttribute("timestamp", timestamp);
-            modelMap.addAttribute("checkToken", checkToken);
+            modelMap.addAttribute("checkToken", accessToken);
         }
 
         return "tool/at";
