@@ -24,7 +24,7 @@ public class PasswordUtils {
         byte[] key = Base64.decodeBase64(keyStr);
         try {
             byte[] to = AESCoder.encrypt(Base64.encodeBase64(StringUtils.getBytesUtf8(src)), key);
-            return Base64.encodeBase64String(to);
+            return Base64.encodeBase64URLSafeString(to);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             return null;

@@ -12,12 +12,12 @@
 		<table>
 			<tbody>
 				<tr>
-					<td><label>pwd:</label></td>
+					<td align="right"><label>pwd:</label></td>
 					<td><input type="text" name="pwd" value="${pwd}"
 						maxlength="64" /></td>
 				</tr>
 				<tr>
-					<td><label>encryptPwd:</label></td>
+					<td align="right"><label>encryptPwd:</label></td>
 					<td><label>${encryptPwd}</label></td>
 				</tr>
 				<tr>
